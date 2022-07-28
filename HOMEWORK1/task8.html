@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Напишіть скріпт, який вираховує кількість секунд в годині, в добі, в місяці, записує результати в відповідні змінні, і виводить їх значення на екран. -->
+    <script>
+        let secondsInAnHour = 60 * 60; //кількість секунд в годині
+        let secondsInADay = secondsInAnHour * 24; //в добі
+        let secondsInAMonth = secondsInADay * 30; //в місяці, якщо пиймаємо що в місяці 30 днів
+
+        alert(`У годині ${secondsInAnHour} секунд.\r\nУ добі ${secondsInADay} секунд.\r\nУ місяці ${secondsInAMonth} секунд.`);
+
+        //variant 2 with user input
+        let secondsInput = prompt(`У годині ${secondsInAnHour} секунд.\r\nУ добі ${secondsInADay} секунд.\r\nУ місяці ${secondsInAMonth} секунд.\r\n\r\nБудьласка вкажить кілкість секунд, щоб отримати відповідь скільки то буде годин, діб та місяців.`);
+        let hoursInput = (secondsInput / secondsInAnHour).toFixed(2);
+        let daysInput = (secondsInput / secondsInADay).toFixed(2);
+        let monthInput = (secondsInput / secondsInAMonth).toFixed(2);
+
+        alert(`Ви увели ${secondsInput} секунд, що дорівнює ${hoursInput} годинам, чи ${daysInput} добам, чи ${monthInput} місяцям`);
+    </script>
+</body>
+</html>

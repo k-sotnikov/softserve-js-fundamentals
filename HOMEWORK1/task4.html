@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Task 1.4</title>
 </head>
 <body>
-    
+    <!-- Створіть об’єкт з 5-ма наступними властивостями: “String”, “Number”, “Boolean”, “Undefined”, “Null”. Значення кожної властивості повинно відповідати відповідному примітивному типу даних. -->
+    <script>
+        let obj = {
+            name : "Alex", //“String”
+            age : 25, //“Number”
+            isAStudent : false, //“Boolean”
+            job : undefined, //“Undefined”
+            yearIncome : null //“Null”
+        };
+
+        //Variant 1 of checking the type of variable.
+        console.log(typeof obj.name);
+        console.log(typeof obj.age);
+        console.log(typeof obj.isAStudent);
+        console.log(typeof obj.job);
+        console.log(typeof obj.yearIncome);
+
+        //Variant 2 of checking the type of variable.
+        console.log("-----");
+
+        for (const key in obj) {
+            const element = obj[key];
+            console.log(`Variable "${key}" is a "${typeof element}".`);
+        }
+    </script>
 </body>
 </html>

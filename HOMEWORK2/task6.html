@@ -15,11 +15,9 @@
         let p = (a + b + c) / 2;
         let s = (p*(p-a)*(p-b)*(p-c))**(1/2);
 
-        if (isNaN(a) || isNaN(b) || isNaN(c)) {
-            alert("ві ввели не число");
-        } else if (s == 0 || isNaN(s) ) {
-            alert("трикутник з такими сторонами не може існувати");
-        } else {
+        if (isNaN(a) || isNaN(b) || isNaN(c) || s == 0 || isNaN(s)) {
+            alert("Incorrect data");
+         } else {
             console.log(`площа трикутника: ${s.toFixed(3)}`);
 
             if (a**2 == (b**2 + c**2) || b**2 == (a**2 + c**2) || c**2 == (a**2 + b**2)) {

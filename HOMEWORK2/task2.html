@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 2.2</title>
+</head>
+<body>
+    <script>
+        const inputNumber = +prompt("Please enter a number");
+        
+        if (inputNumber % 2 === 0 && inputNumber > 0 && inputNumber % 7 === 0){
+            console.log("You entered the even positive number multiple of 7");
+        } else if (inputNumber % 2 === 0 && inputNumber > 0) {
+            console.log("You entered even positive number");
+        } else if (inputNumber % 7 === 0){
+            console.log("You entered the number multiple of 7");
+        } else {
+            console.log("You entered the number which is not even positive number or multiple of 7");
+        }
+    </script>
+</body>
+</html>

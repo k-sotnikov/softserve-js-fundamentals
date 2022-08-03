@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 2.4</title>
+</head>
+<body>
+    <script>
+        // Напишіть програму, яка об’єднує всі наявні елементи масиву в стрічку і розділяє їх символом “*”.
+        // Початковий масив:
+        // let cities = ["Rome", "Lviv", "Warsaw"];
+        // Результат:
+        // "Rome*Lviv*Warsaw"
+        let cities = ["Rome", "Lviv", "Warsaw"];
+        let citiesString = "";
+
+        citiesString = cities[0] + "*" + cities[1] + "*" + cities[2];
+        
+        //variant 2
+        // for (let index = 0; index < cities.length; index++) {
+        //     const element = cities[index];
+        //     if (index != cities.length - 1) {
+        //         citiesString = citiesString + element + "*";
+        //     } else {
+        //         citiesString = citiesString + element;
+        //     }
+        // }
+
+        alert(citiesString);
+
+    </script>
+</body>
+</html>

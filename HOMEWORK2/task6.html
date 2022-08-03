@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 2.6</title>
+</head>
+<body>
+    <script>
+        let a = +prompt("Введіть довжину першої сторони трикутника");
+        let b = +prompt("Введіть довжину другої сторони трикутника");
+        let c = +prompt("Введіть довжину третьої сторони трикутника");
+        
+        let p = (a + b + c) / 2;
+        let s = (p*(p-a)*(p-b)*(p-c))**(1/2);
+
+        if (isNaN(a) || isNaN(b) || isNaN(c)) {
+            alert("ві ввели не число");
+        } else if (s == 0 || isNaN(s) ) {
+            alert("трикутник з такими сторонами не може існувати");
+        } else {
+            console.log(`площа трикутника: ${s.toFixed(3)}`);
+
+            if (a**2 == (b**2 + c**2) || b**2 == (a**2 + c**2) || c**2 == (a**2 + b**2)) {
+                console.log("трикутник при цьому прямокутний");
+            } else {
+                console.log("трикутник при цьому не прямокутний");
+            }
+        }
+
+    </script>
+</body>
+</html>

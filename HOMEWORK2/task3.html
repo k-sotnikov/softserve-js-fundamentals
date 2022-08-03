@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW 2.3</title>
+</head>
+<body>
+    <script>
+        //Створіть порожній масив;
+        const arr = [];
+        //1) У перший елемент масиву запишіть будь-яке число;
+        arr[0] = 5;
+        //2) У другий елемент масиву запишіть будь-який рядок;
+        arr[1] = "work";
+        //3) У третій елемент масиву запишіть будь-яке логічне значення;
+        arr[2] = true;
+        //4) У четвертий елемент масиву запишіть значення null;
+        arr[3] = null;
+        //5) Виведіть на екран число елементів, яке зберігається в масиві;
+        alert(`There are ${arr.length} elements in the array`);
+        //6) Запитайте у користувача ввести будь-яке значення і запишіть це значення в п'ятий елемент масиву;
+        arr[4] = prompt("Please enter something");
+        // 7) Виведіть на екран п'ятий елемент масиву.
+        alert(`5 element of the array is "${arr[4]}" .`);
+        // 8) Видаліть 1-ий елемент масиву і виведіть масив на екран.
+        arr.shift();
+        alert(arr);
+
+    </script>
+</body>
+</html>

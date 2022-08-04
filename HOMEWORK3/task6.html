@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.6</title>
+</head>
+
+<body>
+    <script>
+        //функія повертає false чи true
+        function findUnique(arr) {
+            let isUnique = true;
+            for (let index = 0; index < arr.length - 1; index++) {
+                
+                const element = arr[index];
+                const i = index + 1;
+                if (arr.indexOf(element, i) !== -1) {
+                    isUnique = false;
+                    break;
+                } else {
+                    continue;
+                }
+            }
+            return isUnique;
+        }
+
+        //створюємо масив вводом з клавіатури
+        let inpString = prompt("Введіть числа, розділяючи їх комами, щоб створити масив");
+        let array = inpString.split(',');
+        
+        //визиваэмо функцію та передаємо в неї масив створений юзером вводом з клавіатури
+        let message = findUnique(array) ? "усі числа масива унікальні" : "хоча б одно число масива не є унікальним";
+        alert(message);
+
+    </script>
+</body>
+
+</html>

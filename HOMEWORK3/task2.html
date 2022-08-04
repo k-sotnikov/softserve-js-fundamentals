@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.2</title>
+</head>
+<body>
+    <script>
+//         Напишіть JavaScript for цикл, який буде ітеруватися від 0 до 15. Для кожної ітерації він перевірятиме, чи є поточне число парним чи непарним, і відображатиме повідомлення на екрані.
+// Sample Output: 
+// "0 is even" 
+// "1 is odd" 
+// "2 is even" 
+        for (let index = 0; index <= 15; index++) {
+            if (index % 2 === 0) {
+                console.log(`${index} is even`); // не знав яким чином відображати на екрані повідомлення. використав 2 варіанти.
+                document.write(`${index} is even <br>`);
+            } else {
+                console.log(`${index} is odd`);
+                document.write(`${index} is odd <br>`);
+            }
+        }
+    </script>
+</body>
+</html>

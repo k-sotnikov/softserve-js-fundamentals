@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.1</title>
+</head>
+<body>
+    <script>
+        // Заданий масив з елементами [2, 3, 4, 5]. За допомогою циклу for знайдіть добуток елементів цього масиву. Також реалізуйте завдання через while.
+        const arr = [2, 3, 4, 5];
+        let multiply = 1;
+
+        //for of
+        for (const value of arr) {
+            multiply *= value;
+        }
+        console.log("добуток елементів масиву, використовував метод for of: " + multiply);
+        multiply = 1;
+
+        //for
+        for (let index = 0; index < arr.length; index++) {
+            multiply *= arr[index];
+        }
+        console.log("добуток елементів масиву, використовував метод for: " + multiply);
+        multiply = 1;
+
+        //for in
+        for (const key in arr) {
+            multiply *= arr[key];
+        }
+        console.log("добуток елементів масиву, використовував метод for in: " + multiply);
+        multiply = 1;
+
+        //while
+        let i = 0;
+        while (i < arr.length) {
+            multiply *= arr[i];
+            i++;
+        }
+        console.log("добуток елементів масиву, використовував метод while: " + multiply);
+        multiply = 1;
+
+    </script>
+    
+</body>
+</html>

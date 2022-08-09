@@ -50,7 +50,7 @@ class MonthException {
 let showMonthName = function(monthNumber) {
     
     try {
-        if (monthNumber >= 0 && monthNumber < 13) {
+        if (monthNumber > 0 && monthNumber < 13) {
             let date = new Date(0, monthNumber-1);
             let monthName = date.toLocaleString('default', { month: 'long' });
             alert(monthName);

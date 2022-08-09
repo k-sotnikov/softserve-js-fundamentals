@@ -2,14 +2,14 @@
 console.log("Task 1:");
 
 let calcRectangleArea = function (width, height) {
-    if (!Number(width) || !Number(width)) {
+    if (isNaN(width) || !Number(height)) {
         throw new Error("Not a number");
     } else {
         return width * height;
     }
 }
 try {
-    console.log(calcRectangleArea("test",2));
+    console.log(calcRectangleArea("test", 6));
 } catch (error) {
     console.log(error);
 }

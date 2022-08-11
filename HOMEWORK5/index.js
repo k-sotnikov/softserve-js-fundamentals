@@ -186,3 +186,72 @@ sortWorkersByExperience(worker1, worker2, worker3, worker4, worker5);
 
 // task 5
 console.log("task 5:");
+
+class GeometricFigure {
+    getArea() {
+        return 0;
+    }
+    toString() {
+        return Object.getPrototypeOf(this).constructor.name;
+    }
+}
+
+class Triangle extends GeometricFigure {
+    constructor(lengthOfBasement, heightToBasement) {
+        super(lengthOfBasement, heightToBasement);
+        this.lengthOfBasement = lengthOfBasement;
+        this.heightToBasement = heightToBasement;
+    }
+    getArea() {
+        return this.lengthOfBasement / 2 * this.heightToBasement;
+    }
+}
+
+class Square extends GeometricFigure {
+    constructor(lengthOfSide) {
+        super(lengthOfSide);
+        this.lengthOfSide = lengthOfSide;
+    }
+    getArea() {
+        return this.lengthOfSide ** 2;
+    }
+}
+
+class Circle extends GeometricFigure {
+    constructor(r) {
+        super(r);
+        this.r = r;
+    }
+    getArea() {
+        return +(Math.PI * (this.r ** 2)).toFixed(2);
+    }
+}
+
+class Rectangle {
+    constructor(lengthOfSide1, lengthOfSide2) {
+        this.lengthOfSide1 = lengthOfSide1;
+        this.lengthOfSide2 = lengthOfSide2;
+    }
+    getArea() {
+        return this.lengthOfSide1 * this.lengthOfSide2;
+    }
+    toString() {
+        return Object.getPrototypeOf(this).constructor.name;
+    }
+}
+
+let handleFigures = function(arrOfFigures) {
+    let total = 0;
+    for (const iterator of arrOfFigures) {
+        total += iterator.getArea();
+        if (iterator instanceof GeometricFigure) {
+            console.log(`Geometric figure: ${iterator.toString()} - area: ${iterator.getArea()}`);
+        } else {
+            console.log(`Some figure: ${iterator.toString()} - area: ${iterator.getArea()}`);
+        }
+    }
+    console.log(`${total.toFixed(2)}  // total area`);
+};
+
+const figures = [new Triangle(4, 5), new Square(7), new Circle(5), new Rectangle(2, 4)];
+console.log(handleFigures(figures));

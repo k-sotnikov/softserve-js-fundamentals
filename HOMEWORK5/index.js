@@ -240,18 +240,21 @@ class Rectangle {
     }
 }
 
-let handleFigures = function(arrOfFigures) {
+const handleFigures = function(arrOfFigures) {
     let total = 0;
+    let msg = "";
+
     for (const iterator of arrOfFigures) {
         total += iterator.getArea();
         if (iterator instanceof GeometricFigure) {
-            console.log(`Geometric figure: ${iterator.toString()} - area: ${iterator.getArea()}`);
+            msg += `Geometric figure: ${iterator.toString()} - area: ${iterator.getArea()}\r\n`;
         } else {
-            console.log(`Some figure: ${iterator.toString()} - area: ${iterator.getArea()}`);
+            msg += `Some figure: ${iterator.toString()} - area: ${iterator.getArea()}\r\n`;
         }
     }
-    console.log(`${total.toFixed(2)}  // total area`);
-};
+    msg += `${total.toFixed(2)}  // total area\r\n`;
+    return msg;
+}
 
 const figures = [new Triangle(4, 5), new Square(7), new Circle(5), new Rectangle(2, 4)];
 console.log(handleFigures(figures));

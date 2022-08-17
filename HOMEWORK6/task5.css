@@ -1,0 +1,30 @@
+.green-background {
+    background-color: #00ff00;
+}
+
+.bold-font {
+    font-weight: bold;
+}
+
+.red-font {
+    color: red;
+}
+
+.underlined-font {
+    text-decoration: underline;
+}
+
+.italic-font {
+    font-style: italic;
+}
+
+.one-line {
+    display: inline-block;
+    font-size: medium;
+    padding: 0px;
+    margin: 0px;
+}
+
+.invisible {
+    visibility: hidden;
+}

@@ -1,0 +1,25 @@
+a {
+    color: black;
+}
+
+a:hover {
+    color: gray;
+}
+
+/*--classes to change body after events--*/
+
+.blueBackgroundColor {
+    background-color: blue;
+}
+
+.pinkBackgroundColor {
+    background-color: pink;
+}
+
+.brownBackgroundColor {
+    background-color: brown;
+}
+
+.yellowBackgroundColor {
+    background-color: yellow;
+}

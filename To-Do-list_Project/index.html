@@ -8,27 +8,29 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <form>
-        <select id="listCategoryList">
-            <option value="value1" selected>My workday</option>
-            <option value="value2">Значение 2</option>
-            <option value="value3">Значение 3</option>
-        </select>
-        <input type="text" id="addlistCategoryField">
-        <button id="addListCategoryButton">New To-Do list</button>
-    </form>
+    <select name="listCategoryList" id="listCategoryList">
+    </select>
+    <input type="text" id="addlistCategoryField" placeholder="New To-do category">
+    <button id="addListCategoryButton">+</button>
     <br />
-    <H1>My workday</H1>
-    <form></form>
-        <input type="text" id="addItemField">
-        <button id="addItemButton">+</button>
-        <br />
-        
-        <input type="checkbox" class="itemCheckbox" value=""><span>wakeup</span><button class="delItemButton">-</button><br>
-        <input type="checkbox" class="itemCheckbox" value=""><span>go to bathroom</span><button class="delItemButton">-</button><br>
-    </form>
-        
-    
+
+    <H1 id="categoryNameOutput">My workday</H1>
+
+    <table id="items">
+        <tr class="doNotRemove">
+            <th colspan="2"><input type="text" id="addItemTextField" placeholder="New To-do item"></th>
+            <th><button id="addItemButton">+</button></th>
+        </tr>
+        <tr>
+            <td ><input type="checkbox" class="itemCheckbox" value="1"></td>
+            <td><p class="itemTextClass">wakeup wakeup wakeup wakeup wakeup</p></td>
+            <td><button class="delItemButton">-</button></td>
+        </tr>
+        <tr>
+            <td ><input type="checkbox" class="itemCheckbox" value="2"></td>
+            <td><p class="itemTextClass">morning exercise</p></td>
+            <td><button class="delItemButton">-</button></td>
+        </tr>
 
     <script src="index.js"></script>
 </body>

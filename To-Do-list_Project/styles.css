@@ -1,3 +1,15 @@
 body {
     font-family: Helvetica, sans-serif;
   }
+
+  /* .itemCheckbox
+  .itemTextClass
+   */
+
+/* .itemCheckbox,
+.itemTextClass,
+.delItemButton {
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+} */

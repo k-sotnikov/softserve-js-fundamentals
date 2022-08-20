@@ -8,30 +8,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <select name="listCategoryList" id="listCategoryList">
+    <select name="categoryList" id="categoryList">
     </select>
-    <input type="text" id="addlistCategoryField" placeholder="New To-do category">
+    <input type="text" id="addListCategoryField" placeholder="New To-do category">
     <button id="addListCategoryButton">+</button>
     <br />
 
-    <H1 id="categoryNameOutput">My workday</H1>
+    <H1 id="categoryNameOutput"></H1>
 
     <table id="items">
         <tr class="doNotRemove">
             <th colspan="2"><input type="text" id="addItemTextField" placeholder="New To-do item"></th>
             <th><button id="addItemButton">+</button></th>
         </tr>
-        <tr>
-            <td ><input type="checkbox" class="itemCheckbox" value="1"></td>
-            <td><p class="itemTextClass">wakeup wakeup wakeup wakeup wakeup</p></td>
-            <td><button class="delItemButton">-</button></td>
-        </tr>
-        <tr>
-            <td ><input type="checkbox" class="itemCheckbox" value="2"></td>
-            <td><p class="itemTextClass">morning exercise</p></td>
-            <td><button class="delItemButton">-</button></td>
-        </tr>
-
+    </table>
+        
     <script src="index.js"></script>
 </body>
 </html>

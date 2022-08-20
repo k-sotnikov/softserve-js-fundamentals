@@ -1,11 +1,101 @@
-let toDoCategories = [];
-let toDoItems = [];
+// local storage implementation
 
-// let cat1 = {
-//     categoryName: "Hosework",
-//     categoryValue: "Hosework",
-//     parentCategory: ""
-// }
+function writeCategoryToLocalStorage() {
+    localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
+}
+
+
+function readCategoryFromLocalStorage() {
+    let infFromLocalStorage = JSON.parse(localStorage.getItem('toDoCategories'));
+    if (infFromLocalStorage === null) {
+        toDoCategories = [];
+        localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
+    }
+    return JSON.parse(localStorage.getItem('toDoCategories'));
+}
+
+function writeItemToLocalStorage() {
+    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
+}
+
+
+function readItemFromLocalStorage() {
+    let infFromLocalStorage = JSON.parse(localStorage.getItem('toDoItems'));
+    if (infFromLocalStorage === null) {
+        toDoItems = [];
+        localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
+    }
+    return JSON.parse(localStorage.getItem('toDoItems'));
+}
+
+let toDoCategories;
+toDoCategories = readCategoryFromLocalStorage();
+let toDoItems;
+toDoItems = readItemFromLocalStorage();
+
+//categories
+
+//showing categories in List
+
+function hideCategoryInList() {
+    let optionInCategoryList = document.querySelectorAll('option');
+    for (const iterator of optionInCategoryList) {
+        iterator.remove();
+    }
+}
+
+function showCategoryInList(){
+    let categoryList = document.querySelector('#categoryList');
+    for (const iterator of toDoCategories) {
+        let optionElement = document.createElement("option");
+        optionElement.value = iterator.categoryValue;
+        optionElement.innerHTML = iterator.categoryName;
+        categoryList.appendChild(optionElement);
+    }
+    
+}
+
+showCategoryInList();
+
+//adding categories' objects to array
+
+class Category {
+    constructor(categoryName, parentCategory) {
+        this.categoryName = categoryName;
+        this.categoryValue = categoryName;
+        this.parentCategory = parentCategory;
+    }
+
+    pushCategoryToArray() {
+        toDoCategories.push(this);
+        writeCategoryToLocalStorage();
+
+    }
+}
+
+let addListCategoryButton = document.querySelector('#addListCategoryButton');
+addListCategoryButton.addEventListener("click", () => {
+    let addListCategoryField = document.querySelector('#addListCategoryField');
+    (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
+    addListCategoryField.value = "";
+    hideCategoryInList();
+    showCategoryInList();
+});
+
+//show category name and items
+function showCategoryNameAndItems() {
+    let categoryList = document.querySelector('#categoryList');
+    let categoryNameOutput = document.querySelector('#categoryNameOutput');
+    categoryNameOutput.innerHTML = categoryList.value;
+    hideItems();
+    showItems();
+}
+
+showCategoryNameAndItems();
+let categoryList = document.querySelector('#categoryList');
+categoryList.addEventListener('change', showCategoryNameAndItems);
+
+//items
 
 class Item {
     constructor(itemName, itemCategory) {
@@ -16,15 +106,11 @@ class Item {
 
     pushItemToArray() {
         toDoItems.push(this);
+        writeItemToLocalStorage();
     }
 }
 
-
-let addItemTextField = document.querySelector("#addItemTextField");
-let addItemButton = document.querySelector("#addItemButton");
-
-
-const hideItems = function () {
+function hideItems() {
     let itemsElements = document.querySelectorAll('tr');
     for (const iterator of itemsElements) {
         if (iterator.className !== "doNotRemove") {
@@ -33,56 +119,77 @@ const hideItems = function () {
     }
 }
 
-let showItems = function () {
+function delItem(event) {
+    itemToDel = event.target.parentElement.previousElementSibling.children[0].innerHTML;
+    let index = toDoItems.findIndex(el => el.itemName === itemToDel);
+    toDoItems.splice(index, 1);
+    writeItemToLocalStorage();
+    event.target.parentElement.parentElement.remove();
+}   
+
+function showItems() {
     let items = document.querySelector('#items');
+    let categoryList = document.querySelector('#categoryList');
 
     for (const i of toDoItems) {
-        let tr = document.createElement("tr");
+        // if item category == gategory to show
+        if (categoryList.value === i.itemCategory) {
+            let tr = document.createElement("tr");
         
-        let td1 = document.createElement("td");
-        let input = document.createElement("input");
-        input.type = "checkbox";
-        input.className = "itemCheckbox";
-        input.checked = i.itemIsDone;
-        // input.addEventListener("click", () => {
-        //     console.log(input.checked);
-        // });
-        
-        tr.append(td1);
-        td1.append(input);
-        
-        let td2 = document.createElement("td");
-        let p = document.createElement("p");
-        p.className = "itemTextClass";
-        p.innerText = i.itemName;
-        tr.append(td2);
-        td2.append(p);
-        
-        let td3 = document.createElement("td");
-        let button = document.createElement("button");
-        button.className = "delItemButton";
-        button.innerText = "-";
-        tr.append(td3);
-        td3.append(button);
+            let td1 = document.createElement("td");
+            let input = document.createElement("input");
+            input.type = "checkbox";
+            input.className = "itemCheckbox";
+            input.checked = i.itemIsDone;
+            input.addEventListener("click", () => {
+                i.itemIsDone = input.checked;
+                writeItemToLocalStorage();
+                if (input.checked) {
+                    p.classList.add("lineThrough");
+                } else {
+                    p.classList.remove("lineThrough");
+                }
+            });
+            
+            tr.append(td1);
+            td1.append(input);
+            
+            let td2 = document.createElement("td");
+            let p = document.createElement("p");
+            p.className = "itemTextClass";
+            if (input.checked) {
+                p.classList.add("lineThrough");
+            }
+            p.innerText = i.itemName;
+            tr.append(td2);
+            td2.append(p);
+            
+            let td3 = document.createElement("td");
+            let button = document.createElement("button");
+            button.className = "delItemButton";
+            button.innerText = "-";
+            button.addEventListener("click", delItem);
+            tr.append(td3);
+            td3.append(button);
 
-        items.append(tr);
-        console.log(tr);
-        console.log(items);
+            items.append(tr);
+        }
+        
     }
 }
 
-// showItems();
-
+let addItemButton = document.querySelector("#addItemButton");
 addItemButton.addEventListener("click", () => {
-    (new Item(addItemTextField.value, "taskCategory1")).pushItemToArray();
-    console.log(toDoItems);
+    let addItemTextField = document.querySelector("#addItemTextField");
+    let categoryList = document.querySelector('#categoryList');
+    (new Item(addItemTextField.value, categoryList.value)).pushItemToArray();
     addItemTextField.value = "";
     hideItems();
     showItems();
 });
 
-hideItems();
-showItems();
+showCategoryNameAndItems();
+
 
     
 

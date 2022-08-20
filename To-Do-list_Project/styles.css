@@ -2,6 +2,10 @@ body {
     font-family: Helvetica, sans-serif;
   }
 
+.lineThrough {
+    text-decoration: line-through;
+}
+
   /* .itemCheckbox
   .itemTextClass
    */

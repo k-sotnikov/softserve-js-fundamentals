@@ -86,7 +86,7 @@ addListCategoryButton.addEventListener("click", () => {
 function showCategoryNameAndItems() {
     let categoryList = document.querySelector('#categoryList');
     let categoryNameOutput = document.querySelector('#categoryNameOutput');
-    categoryNameOutput.innerHTML = categoryList.value;
+    categoryNameOutput.innerHTML = categoryList.value + " :";
     hideItems();
     showItems();
 }

@@ -1,0 +1,34 @@
+body {
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    background-color: #F7F7F7;
+}
+
+/* tr {
+  width: 100%;
+  box-sizing: inline-block;
+} */
+
+h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.lineThrough {
+    text-decoration: line-through;
+}
+
+button {
+  background-color: rgb(2, 180, 2);
+  color: white;
+  border-color: rgb(2, 180, 2);
+  border-radius: 4px;
+}
+
+input[type='checkbox'] {
+  accent-color: rgb(2, 180, 2);
+}
+
+#addItemTextField {
+  width: 95%;
+}

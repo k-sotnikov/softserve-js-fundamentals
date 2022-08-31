@@ -82,14 +82,20 @@ class Category {
 }
 
 let addListCategoryButton = document.querySelector('#addListCategoryButton');
+let addListCategoryField = document.querySelector('#addListCategoryField');
 addListCategoryButton.addEventListener("click", () => {
-    let addListCategoryField = document.querySelector('#addListCategoryField');
     (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
     writelastSelectedOrCreatedCategoryInListToLocalStorage(addListCategoryField.value);
     addListCategoryField.value = "";
     hideCategoriesInDropdownList();
     showCategoriesInDropdownList();
     showCategoryNameAndItems();
+});
+
+addListCategoryField.addEventListener("keyup", (e) => {
+    if(e.keyCode == 13){
+        addListCategoryButton.click();
+    }
 });
 
 //show category name and items
@@ -130,12 +136,14 @@ class Item {
 
 function showAddItemTextFieldAndButton() {
         let items = document.querySelector('#items');
+        
         let addElementTr = document.createElement('tr');
         addElementTr.innerHTML = `
         <th colspan="2"><input type="text" id="addItemTextField" placeholder="New To-do item"></th>
         <th><button id="addItemButton">+</button></th>
         `;
         items.append(addElementTr);
+        
         let addItemButton = document.querySelector("#addItemButton");
         addItemButton.addEventListener("click", () => {
             let addItemTextField = document.querySelector("#addItemTextField");
@@ -146,7 +154,12 @@ function showAddItemTextFieldAndButton() {
             showAddItemTextFieldAndButton();
             showItems();
         });
-
+        
+        document.querySelector("#addItemTextField").addEventListener("keyup", (e) => {
+            if(e.keyCode == 13){
+                addItemButton.click();
+            }
+        });
 }
 
 function hideItemsAndAddItemTextFieldAndButton() {

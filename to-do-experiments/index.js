@@ -95,6 +95,7 @@ addListCategoryButton.addEventListener("click", () => {
 addListCategoryField.addEventListener("keyup", (e) => {
     if(e.keyCode == 13){
         addListCategoryButton.click();
+        addListCategoryField.focus();
     }
 });
 
@@ -158,6 +159,7 @@ function showAddItemTextFieldAndButton() {
         document.querySelector("#addItemTextField").addEventListener("keyup", (e) => {
             if(e.keyCode == 13){
                 addItemButton.click();
+                document.querySelector("#addItemTextField").focus();
             }
         });
 }

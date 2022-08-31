@@ -1,5 +1,13 @@
 // local storage implementation
 
+function writelastSelectedOrCreatedCategoryInListToLocalStorage(category) {
+    localStorage.setItem('lastSelectedCategoryInList', category);
+}
+
+function readlastSelectedCategoryInListFromLocalStorage() {
+    return localStorage.getItem('lastSelectedCategoryInList');
+}
+
 function writeCategoryToLocalStorage() {
     localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
 }
@@ -37,14 +45,14 @@ toDoItems = readItemFromLocalStorage();
 
 //showing categories in List
 
-function hideCategoryInList() {
+function hideCategoriesInDropdownList() {
     let optionInCategoryList = document.querySelectorAll('option');
     for (const iterator of optionInCategoryList) {
         iterator.remove();
     }
 }
 
-function showCategoryInList(){
+function showCategoriesInDropdownList(){
     let categoryList = document.querySelector('#categoryList');
     for (const iterator of toDoCategories) {
         let optionElement = document.createElement("option");
@@ -52,10 +60,10 @@ function showCategoryInList(){
         optionElement.innerHTML = iterator.categoryName;
         categoryList.appendChild(optionElement);
     }
-    
+    categoryList.value = readlastSelectedCategoryInListFromLocalStorage();
 }
 
-showCategoryInList();
+showCategoriesInDropdownList();
 
 //adding categories' objects to array
 
@@ -77,19 +85,28 @@ let addListCategoryButton = document.querySelector('#addListCategoryButton');
 addListCategoryButton.addEventListener("click", () => {
     let addListCategoryField = document.querySelector('#addListCategoryField');
     (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
+    writelastSelectedOrCreatedCategoryInListToLocalStorage(addListCategoryField.value);
     addListCategoryField.value = "";
-    hideCategoryInList();
-    showCategoryInList();
+    hideCategoriesInDropdownList();
+    showCategoriesInDropdownList();
+    showCategoryNameAndItems();
 });
 
 //show category name and items
 function showCategoryNameAndItems() {
     let categoryList = document.querySelector('#categoryList');
     let categoryNameOutput = document.querySelector('#categoryNameOutput');
-    categoryNameOutput.innerHTML = categoryList.value + " :";
-    hideItems();
-    showAddItemTextFieldAndButton();
-    showItems();
+    if (categoryList.value) {
+        categoryNameOutput.innerHTML = categoryList.value;
+        writelastSelectedOrCreatedCategoryInListToLocalStorage(categoryList.value);
+        hideItemsAndAddItemTextFieldAndButton();
+        showAddItemTextFieldAndButton();
+        showItems();
+    } else {
+        hideItemsAndAddItemTextFieldAndButton();
+        categoryNameOutput.innerHTML = 'Please add a category to start using the application';
+    }
+    
 }
 
 showCategoryNameAndItems();
@@ -125,14 +142,14 @@ function showAddItemTextFieldAndButton() {
             let categoryList = document.querySelector('#categoryList');
             (new Item(addItemTextField.value, categoryList.value)).pushItemToArray();
             addItemTextField.value = "";
-            hideItems();
+            hideItemsAndAddItemTextFieldAndButton();
             showAddItemTextFieldAndButton();
             showItems();
         });
 
 }
 
-function hideItems() {
+function hideItemsAndAddItemTextFieldAndButton() {
     let itemsElements = document.querySelectorAll('tr');
     for (const iterator of itemsElements) {
         iterator.remove();
@@ -149,11 +166,13 @@ function delItem(event) {
 
 function showItems() {
     let items = document.querySelector('#items');
-    let categoryList = document.querySelector('#categoryList');
+    let categoryDropdownList = document.querySelector('#categoryList');
+
+    let counter = 0;
 
     for (const i of toDoItems) {
-        // if item category == gategory to show
-        if (categoryList.value === i.itemCategory) {
+        if (categoryDropdownList.value === i.itemCategory) {
+            counter++;
             let tr = document.createElement("tr");
         
             let td1 = document.createElement("td");
@@ -194,44 +213,27 @@ function showItems() {
 
             items.append(tr);
         }
-        
+    }
+
+    if (counter === 0) {
+        let addElementTr = document.createElement('tr');
+        addElementTr.innerHTML = `<td colspan="3"><p>Please add a new item to the list</p></td>`;
+        items.append(addElementTr);
+
     }
 }
 
-showCategoryNameAndItems();
-
-
 // adding listener to all events
 
-document.addEventListener("click", function(event){
-   if (event.target.className === "delItemButton") {
-        console.log("Dell item Button pressed");
-    }
-    if (event.target.id === "addItemButton") {
-        console.log("Add item Button pressed");
-    }
-    if (event.target.id === "addListCategoryButton") {
-        console.log("Add list Button pressed");
-    }
-}); 
-
-// let divArray = document.querySelectorAll("div");
-// divArray.forEach(div => {
-//     div.addEventListener("click", handler);
-// });
-
-// // данная функция установлена как обработчик события click для всех div на странице
-// function handler(event) {
-//     // event.target - элемент, который инициировал событие
-//     // this - элемент, для которого срабатывает обработчик
-//     alert(`this.id = ${this.id} event.target.id = ${event.target.id}`);
-// }
-
-
-    
-
-
-
-
-
+// document.addEventListener("click", function(event){
+//    if (event.target.className === "delItemButton") {
+//         console.log("Dell item Button pressed");
+//     }
+//     if (event.target.id === "addItemButton") {
+//         console.log("Add item Button pressed");
+//     }
+//     if (event.target.id === "addListCategoryButton") {
+//         console.log("Add list Button pressed");
+//     }
+// }); 
 

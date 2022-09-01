@@ -1,42 +1,24 @@
-// local storage implementation
-
-function readlastSelectedCategoryInListFromLocalStorage() {
-    return JSON.parse(localStorage.getItem('lastSelectedCategoryInList'));
-}
+//ЛОКАЛ СТОРЕДЖ. Синхронізація
 
 function writeToLocalStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
-
-function readCategoryFromLocalStorage() {
-    let infFromLocalStorage = JSON.parse(localStorage.getItem('toDoCategories'));
-    if (infFromLocalStorage === null) {
-        toDoCategories = [];
-        localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
+function readFromLocalStorage(key) {
+    if (JSON.parse(localStorage.getItem(key)) === null && key !== 'lastSelectedCategoryInList') { //створюємо пустий масив для зберігання обєктів group та item, для зберігання останньої категорії ігноруємо
+        localStorage.setItem(key, JSON.stringify([]));
     }
-    return JSON.parse(localStorage.getItem('toDoCategories'));
+    return JSON.parse(localStorage.getItem(key));
 }
 
+//змінні для роботи з категоріями та items
 
-function readItemFromLocalStorage() {
-    let infFromLocalStorage = JSON.parse(localStorage.getItem('toDoItems'));
-    if (infFromLocalStorage === null) {
-        toDoItems = [];
-        localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
-    }
-    return JSON.parse(localStorage.getItem('toDoItems'));
-}
+let toDoCategories = readFromLocalStorage('toDoCategories');
+let toDoItems = readFromLocalStorage('toDoItems');
 
-let toDoCategories;
-toDoCategories = readCategoryFromLocalStorage();
-let toDoItems;
-toDoItems = readItemFromLocalStorage();
+//КАТЕГОРІЇ
 
-//categories
-
-//showing categories in List
-
+//при доданні нової категорії спочатку відаляемо всі категорії з випадаючого списка
 function hideCategoriesInDropdownList() {
     let optionInCategoryList = document.querySelectorAll('option');
     for (const iterator of optionInCategoryList) {
@@ -44,6 +26,7 @@ function hideCategoriesInDropdownList() {
     }
 }
 
+//відображаємо категорії у випадаючому списку
 function showCategoriesInDropdownList(){
     let categoryList = document.querySelector('#categoryList');
     for (const iterator of toDoCategories) {
@@ -52,13 +35,13 @@ function showCategoriesInDropdownList(){
         optionElement.innerHTML = iterator.categoryName;
         categoryList.appendChild(optionElement);
     }
-    categoryList.value = readlastSelectedCategoryInListFromLocalStorage();
+    categoryList.value = readFromLocalStorage('lastSelectedCategoryInList'); //відображаємо останню активну категорію (вибрану, чи додану), данні про це були попередньо записани у ЛокалСторедж
 }
 
+//при початковому завантаженні сотрінки відображаємо категорії
 showCategoriesInDropdownList();
 
-//adding categories' objects to array
-
+//класс для багаторазового використання для створення нової категорії та функція для додавання категорії у масив та у локал сторедж.
 class Category {
     constructor(categoryName, parentCategory) {
         this.categoryName = categoryName;
@@ -66,21 +49,22 @@ class Category {
         this.parentCategory = parentCategory;
     }
 
-    pushCategoryToArray() {
+    pushCategoryToArrayAndLocalStorage() {
         toDoCategories.push(this);
         writeToLocalStorage("toDoCategories", toDoCategories);
 
     }
 }
 
+//створюємо нову категорію по кліку на кнопку
 let addListCategoryButton = document.querySelector('#addListCategoryButton');
 let addListCategoryField = document.querySelector('#addListCategoryField');
 addListCategoryButton.addEventListener("click", () => {
     if (addListCategoryField.value === "") {
         alert('Please write something to text field to create a new category');
     } else {
-        (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
-        writeToLocalStorage("lastSelectedCategoryInList", addListCategoryField.value);
+        (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArrayAndLocalStorage();
+        writeToLocalStorage("lastSelectedCategoryInList", addListCategoryField.value); //записуємо додану категорію як останню у локал сторєдж
         addListCategoryField.value = "";
         hideCategoriesInDropdownList();
         showCategoriesInDropdownList();
@@ -89,6 +73,7 @@ addListCategoryButton.addEventListener("click", () => {
 
 });
 
+//створюємо нову категорію по натисканню клавіши Ентер
 addListCategoryField.addEventListener("keyup", (e) => {
     if(e.keyCode == 13){
         addListCategoryButton.click();
@@ -96,7 +81,7 @@ addListCategoryField.addEventListener("keyup", (e) => {
     }
 });
 
-//show category name and items
+//відображаємо на сторінці назву вибраної у випадаючому списку категорії та відображаємо перелік items для цієї категорії
 function showCategoryNameAndItems() {
     let categoryList = document.querySelector('#categoryList');
     let categoryNameOutput = document.querySelector('#categoryNameOutput');
@@ -113,12 +98,13 @@ function showCategoryNameAndItems() {
     
 }
 
+//при початковому завантаженні сторінки викликаємо відповіднц функцію
 showCategoryNameAndItems();
+
 let categoryList = document.querySelector('#categoryList');
 categoryList.addEventListener('change', showCategoryNameAndItems);
 
-//items
-
+//класс для багаторазового використання для створення нового завдання (item) та функція для додавання item у масив та у локал сторедж.
 class Item {
     constructor(itemName, itemCategory) {
         this.itemName = itemName;
@@ -132,6 +118,7 @@ class Item {
     }
 }
 
+//відображає на сторінці поле та кнопку для додавання item на сторінку, у масив та локал сторедж
 function showAddItemTextFieldAndButton() {
         let items = document.querySelector('#items');
         
@@ -143,7 +130,7 @@ function showAddItemTextFieldAndButton() {
         items.append(addElementTr);
         
         let addItemButton = document.querySelector("#addItemButton");
-        addItemButton.addEventListener("click", () => {
+        addItemButton.addEventListener("click", () => { // по кліку додаємо item
             let addItemTextField = document.querySelector("#addItemTextField");
             let categoryList = document.querySelector('#categoryList');
             if (addItemTextField.value === "") {
@@ -158,6 +145,7 @@ function showAddItemTextFieldAndButton() {
 
         });
         
+        //по натисканню на клавішу Ентер додаємо item 
         document.querySelector("#addItemTextField").addEventListener("keyup", (e) => {
             if(e.keyCode == 13){
                 addItemButton.click();
@@ -166,6 +154,7 @@ function showAddItemTextFieldAndButton() {
         });
 }
 
+//видаляемо зі сторінки перелік items та кнопку додавання item тому що вони у однієї таблиці для кращего форматування на сторінці. ця функція виконується при додаванні нового item щоб не було їх задвоювання
 function hideItemsAndAddItemTextFieldAndButton() {
     let itemsElements = document.querySelectorAll('tr');
     for (const iterator of itemsElements) {
@@ -173,6 +162,7 @@ function hideItemsAndAddItemTextFieldAndButton() {
     }
 }
 
+//функція для видалення item зі сторінки, масива та локал сторедж
 function delItem(event) {
     itemToDel = event.target.parentElement.previousElementSibling.children[0].innerHTML;
     let index = toDoItems.findIndex(el => el.itemName === itemToDel);
@@ -181,6 +171,7 @@ function delItem(event) {
     event.target.parentElement.parentElement.remove();
 }   
 
+//функція для відображення на сторінці усіх items, відмічання ії виконаними або відображення тексту якщо немає жлдного item
 function showItems() {
     let items = document.querySelector('#items');
     let categoryDropdownList = document.querySelector('#categoryList');
@@ -196,11 +187,11 @@ function showItems() {
             let input = document.createElement("input");
             input.type = "checkbox";
             input.className = "itemCheckbox";
-            input.checked = i.itemIsDone;
-            input.addEventListener("click", () => {
-                i.itemIsDone = input.checked;
-                writeToLocalStorage("toDoItems", toDoItems);
-                if (input.checked) {
+            input.checked = i.itemIsDone; //беремо статус (виконано/не виконано) з обєкта 
+            input.addEventListener("click", () => { 
+                i.itemIsDone = input.checked; //записуємо статус (виконано/не виконано) в обєкт
+                writeToLocalStorage("toDoItems", toDoItems); //після чого завантажуємо масив обєектів з items у локал сторедж
+                if (input.checked) { //згідно статусу робимо item закресленим чи ні
                     p.classList.add("lineThrough");
                 } else {
                     p.classList.remove("lineThrough");

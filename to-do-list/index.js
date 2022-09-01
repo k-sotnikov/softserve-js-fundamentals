@@ -1,15 +1,11 @@
 // local storage implementation
 
-function writelastSelectedOrCreatedCategoryInListToLocalStorage(category) {
-    localStorage.setItem('lastSelectedCategoryInList', category);
-}
-
 function readlastSelectedCategoryInListFromLocalStorage() {
-    return localStorage.getItem('lastSelectedCategoryInList');
+    return JSON.parse(localStorage.getItem('lastSelectedCategoryInList'));
 }
 
-function writeCategoryToLocalStorage() {
-    localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
+function writeToLocalStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
 }
 
 
@@ -20,10 +16,6 @@ function readCategoryFromLocalStorage() {
         localStorage.setItem('toDoCategories', JSON.stringify(toDoCategories));
     }
     return JSON.parse(localStorage.getItem('toDoCategories'));
-}
-
-function writeItemToLocalStorage() {
-    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
 }
 
 
@@ -76,7 +68,7 @@ class Category {
 
     pushCategoryToArray() {
         toDoCategories.push(this);
-        writeCategoryToLocalStorage();
+        writeToLocalStorage("toDoCategories", toDoCategories);
 
     }
 }
@@ -84,12 +76,17 @@ class Category {
 let addListCategoryButton = document.querySelector('#addListCategoryButton');
 let addListCategoryField = document.querySelector('#addListCategoryField');
 addListCategoryButton.addEventListener("click", () => {
-    (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
-    writelastSelectedOrCreatedCategoryInListToLocalStorage(addListCategoryField.value);
-    addListCategoryField.value = "";
-    hideCategoriesInDropdownList();
-    showCategoriesInDropdownList();
-    showCategoryNameAndItems();
+    if (addListCategoryField.value === "") {
+        alert('Please write something to text field to create a new list item');
+    } else {
+        (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
+        writeToLocalStorage("lastSelectedCategoryInList", addListCategoryField.value);
+        addListCategoryField.value = "";
+        hideCategoriesInDropdownList();
+        showCategoriesInDropdownList();
+        showCategoryNameAndItems();
+    }
+
 });
 
 addListCategoryField.addEventListener("keyup", (e) => {
@@ -105,7 +102,7 @@ function showCategoryNameAndItems() {
     let categoryNameOutput = document.querySelector('#categoryNameOutput');
     if (categoryList.value) {
         categoryNameOutput.innerHTML = categoryList.value;
-        writelastSelectedOrCreatedCategoryInListToLocalStorage(categoryList.value);
+        writeToLocalStorage("lastSelectedCategoryInList", categoryList.value);
         hideItemsAndAddItemTextFieldAndButton();
         showAddItemTextFieldAndButton();
         showItems();
@@ -131,7 +128,7 @@ class Item {
 
     pushItemToArray() {
         toDoItems.push(this);
-        writeItemToLocalStorage();
+        writeToLocalStorage("toDoItems", toDoItems);
     }
 }
 
@@ -149,11 +146,16 @@ function showAddItemTextFieldAndButton() {
         addItemButton.addEventListener("click", () => {
             let addItemTextField = document.querySelector("#addItemTextField");
             let categoryList = document.querySelector('#categoryList');
-            (new Item(addItemTextField.value, categoryList.value)).pushItemToArray();
-            addItemTextField.value = "";
-            hideItemsAndAddItemTextFieldAndButton();
-            showAddItemTextFieldAndButton();
-            showItems();
+            if (addItemTextField.value === "") {
+                alert('Please write something to text field to create a new list item');
+            } else {
+                (new Item(addItemTextField.value, categoryList.value)).pushItemToArray();
+                addItemTextField.value = "";
+                hideItemsAndAddItemTextFieldAndButton();
+                showAddItemTextFieldAndButton();
+                showItems();
+            }
+
         });
         
         document.querySelector("#addItemTextField").addEventListener("keyup", (e) => {
@@ -175,7 +177,7 @@ function delItem(event) {
     itemToDel = event.target.parentElement.previousElementSibling.children[0].innerHTML;
     let index = toDoItems.findIndex(el => el.itemName === itemToDel);
     toDoItems.splice(index, 1);
-    writeItemToLocalStorage();
+    writeToLocalStorage("toDoItems", toDoItems);
     event.target.parentElement.parentElement.remove();
 }   
 
@@ -197,7 +199,7 @@ function showItems() {
             input.checked = i.itemIsDone;
             input.addEventListener("click", () => {
                 i.itemIsDone = input.checked;
-                writeItemToLocalStorage();
+                writeToLocalStorage("toDoItems", toDoItems);
                 if (input.checked) {
                     p.classList.add("lineThrough");
                 } else {
@@ -237,18 +239,3 @@ function showItems() {
 
     }
 }
-
-// adding listener to all events
-
-// document.addEventListener("click", function(event){
-//    if (event.target.className === "delItemButton") {
-//         console.log("Dell item Button pressed");
-//     }
-//     if (event.target.id === "addItemButton") {
-//         console.log("Add item Button pressed");
-//     }
-//     if (event.target.id === "addListCategoryButton") {
-//         console.log("Add list Button pressed");
-//     }
-// }); 
-

@@ -77,7 +77,7 @@ let addListCategoryButton = document.querySelector('#addListCategoryButton');
 let addListCategoryField = document.querySelector('#addListCategoryField');
 addListCategoryButton.addEventListener("click", () => {
     if (addListCategoryField.value === "") {
-        alert('Please write something to text field to create a new list item');
+        alert('Please write something to text field to create a new category');
     } else {
         (new Category(addListCategoryField.value, "parentCategory1")).pushCategoryToArray();
         writeToLocalStorage("lastSelectedCategoryInList", addListCategoryField.value);

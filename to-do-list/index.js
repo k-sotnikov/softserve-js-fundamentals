@@ -11,7 +11,7 @@ function readFromLocalStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }
 
-//змінні для роботи з категоріями та items
+//масиви для роботи з категоріями та items початково беруть данні з локал сторедж
 
 let toDoCategories = readFromLocalStorage('toDoCategories');
 let toDoItems = readFromLocalStorage('toDoItems');
@@ -26,7 +26,7 @@ function hideCategoriesInDropdownList() {
     }
 }
 
-//відображаємо категорії у випадаючому списку
+//відображаємо категорії у випадаючому списку на сторінці
 function showCategoriesInDropdownList(){
     let categoryList = document.querySelector('#categoryList');
     for (const iterator of toDoCategories) {
@@ -103,6 +103,8 @@ showCategoryNameAndItems();
 
 let categoryList = document.querySelector('#categoryList');
 categoryList.addEventListener('change', showCategoryNameAndItems);
+
+//ЗАВДАННЯ (ITEMS)
 
 //класс для багаторазового використання для створення нового завдання (item) та функція для додавання item у масив та у локал сторедж.
 class Item {

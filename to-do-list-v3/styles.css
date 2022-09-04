@@ -27,3 +27,6 @@ input[type='checkbox']:checked {
   background-color: #eaeaea;
 }
 
+.form-invisible {
+  display: none;
+}

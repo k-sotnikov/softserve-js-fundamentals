@@ -66,12 +66,14 @@ function showCategoryNameAndItems() {
   let categoryNameOutput = document.querySelector("#categoryNameOutput");
   if (categoryList.value) {
     categoryNameOutput.innerHTML = categoryList.value;
+    categoryList.classList.remove("form-invisible");
     writeToLocalStorage("lastSelectedCategoryInList", categoryList.value);
     hideItemsAndAddItemTextFieldAndButton();
     showAddItemTextFieldAndButton();
     showItems();
   } else {
     hideItemsAndAddItemTextFieldAndButton();
+    categoryList.classList.add("form-invisible");
     categoryNameOutput.innerHTML =
       "Please add a category to start using the application";
   }
@@ -124,12 +126,17 @@ function hideItemsAndAddItemTextFieldAndButton() {
 
 //функція для видалення item зі сторінки, масива та локал сторедж
 function delItem(event) {
-  let itemToDel =
+  let isSure = confirm("Are you sure you want to delete this item?");
+  if (isSure) {
+    let itemToDel =
     event.target.parentElement.previousElementSibling.children[0].innerHTML;
-  let index = toDoItems.findIndex((el) => el.itemName === itemToDel);
-  toDoItems.splice(index, 1);
-  writeToLocalStorage("toDoItems", toDoItems);
-  event.target.parentElement.parentElement.remove();
+    let index = toDoItems.findIndex((el) => el.itemName === itemToDel);
+
+    toDoItems.splice(index, 1);
+    writeToLocalStorage("toDoItems", toDoItems);
+    event.target.parentElement.parentElement.remove();
+  }
+  
 }
 
 function editItem(event) {
@@ -138,11 +145,11 @@ function editItem(event) {
 
   let itemInArray = toDoItems.find((el) => el.itemName === itemToEdit);
 
-  let isLineThrough = "";
-  if (itemInArray.itemIsDone) {
-    isLineThrough = "lineThrough";
-  }
-  let newItemName = "test";
+  // let isLineThrough = "";
+  // if (itemInArray.itemIsDone) {
+  //   isLineThrough = "lineThrough";
+  // }
+  let newItemName = itemToEdit;
   itemInArray.itemName = newItemName;
   writeToLocalStorage("toDoItems", toDoItems);
   //itemToEdit = newItemName;
@@ -175,7 +182,7 @@ function showItems() {
                     <input type="checkbox" class="itemCheckbox form-check-input" ${isChecked}>
                 </div>
                 <div class="col-9 p-3">
-                    <p class="itemTextClass ${isLineThrough}"">${i.itemName}</p>
+                    <p contenteditable="true" class="itemTextClass ${isLineThrough}">${i.itemName}</p>
                 </div>
                 <div class="col-2 p-3">
                     <button class="delItemButton btn btn-dark">-</button>
@@ -289,7 +296,8 @@ function addEventListenerToCheckBoxes() {
 function addEventListenerToEditItemName() {
   let editItemTexts = document.querySelectorAll(".itemTextClass");
   for (const i of editItemTexts) {
-    i.addEventListener("click", editItem);
+    i.addEventListener("change", editItem);
+    //i.addEventListener("click", editItem);
   }
 }
 

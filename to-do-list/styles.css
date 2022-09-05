@@ -1,7 +1,7 @@
 body {
     font-family: Helvetica, sans-serif;
     font-size: 16px;
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
 }
 
 h1 {
@@ -13,17 +13,20 @@ h1 {
     text-decoration: line-through;
 }
 
-button {
-  background-color: rgb(2, 180, 2);
-  color: white;
-  border-color: rgb(2, 180, 2);
-  border-radius: 4px;
-}
-
-input[type='checkbox'] {
-  accent-color: rgb(2, 180, 2);
+input[type='checkbox']:checked {
+  background-color: black !important;
+  border-color: black !important;
+  color: #ffffff !important;
 }
 
 #addItemTextField {
   width: 95%;
+}
+
+#items .row:nth-child(odd) {
+  background-color: #eaeaea;
+}
+
+.form-invisible {
+  display: none;
 }

@@ -105,7 +105,7 @@ function showAddItemTextFieldAndButton() {
   items.innerHTML = `
         <div class="row">
             <div class="col-10 p-3">
-                <input type="text" id="addItemTextField" placeholder="New To-do item" class="form-control">
+                <input type="text" id="addItemTextField" placeholder="New to-do item" class="form-control">
             </div>
             <div class="col-2 p-3">
                 <button id="addItemButton"class="btn btn-dark" type="submit">+</button>
@@ -204,7 +204,7 @@ function showItems() {
     items.innerHTML += `
         <div class="row">
             <div class="col-12 p-3">
-                <p class="itemTextClass">Please add a new item to the list</p>
+                <p class="itemTextClass">Please add a new to-do item to the category</p>
             </div>
         </div>
         `;

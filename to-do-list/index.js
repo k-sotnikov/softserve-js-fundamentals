@@ -149,15 +149,22 @@ function editItem(event) {
   
   if (event.type === "blur") {
     let itemNameAfterEdit = event.target.innerHTML;
-    if (itemNameBeforeEdit !== itemNameAfterEdit) {
-      let isSure = confirm("Are you sure that you want to save changing?");
-      if (isSure) {
-        itemInArrayToEdit.itemName = itemNameAfterEdit;
-        writeToLocalStorage("toDoItems", toDoItems);
-      } else {
-        event.target.innerHTML = itemNameBeforeEdit;
-      }
 
+    if (itemNameBeforeEdit !== itemNameAfterEdit) {
+      if (itemNameAfterEdit === "" || itemNameAfterEdit === "<div><br></div>") {
+        alert("To-do item can not be empty");
+        event.target.innerHTML = itemNameBeforeEdit;
+      } else {
+        let isSure = confirm("Are you sure that you want to save changing?");
+        if (isSure) {
+          itemInArrayToEdit.itemName = itemNameAfterEdit;
+          writeToLocalStorage("toDoItems", toDoItems);
+        } else {
+          event.target.innerHTML = itemNameBeforeEdit;
+        }
+
+      }
+      
     }
   }
 

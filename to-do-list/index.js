@@ -151,7 +151,7 @@ function editItem(event) {
     let itemNameAfterEdit = event.target.innerHTML;
 
     if (itemNameBeforeEdit !== itemNameAfterEdit) {
-      if (itemNameAfterEdit === "" || itemNameAfterEdit === "<div><br></div>") {
+      if (itemNameAfterEdit === "" || itemNameAfterEdit === "<div><br></div>") { //якщо не видалилось <div><br></div> після натискання Ентер то дивимось і це 
         alert("To-do item can not be empty");
         event.target.innerHTML = itemNameBeforeEdit;
       } else {
@@ -168,10 +168,13 @@ function editItem(event) {
     }
   }
 
-  if (event.type === "keyup" && event.keyCode == 13) {
+  if (event.type === "keyup" && event.keyCode == 13) { //Ентер під час редагування
     event.target.innerHTML = event.target.innerHTML.slice(0, -15); //видаляємо <div><br></div> , що чогось дадається при натисканні на Ентер при редагуванні
     event.target.blur();
-    //event.target.parentElement.parentElement.nextElementSibling.firstElementChild.nextElementSibling.firstElementChild.focus();
+  }
+  if (event.type === "keyup" && event.keyCode == 27) { //Esc під час редагування
+    event.target.innerHTML = itemNameBeforeEdit;
+    event.target.blur();
   }
 }
 

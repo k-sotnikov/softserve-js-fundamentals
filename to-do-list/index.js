@@ -150,11 +150,14 @@ function editItem(event) {
   if (event.type === "blur") {
     let itemNameAfterEdit = event.target.innerHTML;
     if (itemNameBeforeEdit !== itemNameAfterEdit) {
-      let isSure = confirm("Are you sure you want to edit this item?");
+      let isSure = confirm("Are you sure that you want to save changing?");
       if (isSure) {
         itemInArrayToEdit.itemName = itemNameAfterEdit;
         writeToLocalStorage("toDoItems", toDoItems);
+      } else {
+        event.target.innerHTML = itemNameBeforeEdit;
       }
+
     }
   }
 

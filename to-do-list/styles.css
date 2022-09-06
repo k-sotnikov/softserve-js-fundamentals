@@ -19,10 +19,6 @@ input[type='checkbox']:checked {
   color: #ffffff !important;
 }
 
-#addItemTextField {
-  width: 95%;
-}
-
 #items .row:nth-child(odd) {
   background-color: #eaeaea;
 }

@@ -65,7 +65,17 @@ function showCategoryNameAndItems() {
   let categoryList = document.querySelector("#categoryList");
   let categoryNameOutput = document.querySelector("#categoryNameOutput");
   if (categoryList.value) {
-    categoryNameOutput.innerHTML = categoryList.value;
+    categoryNameOutput.innerHTML = `
+        <div class="row">
+            <div class="col-10 p-3">
+              <h4 id="categoryTextOutput">${categoryList.value}</h4>
+            </div>
+            <div class="col-2 p-3">
+                <button id="delCategoryButton" class="btn btn-dark" type="submit">-</button>
+            </div>
+        </div>
+        `;
+    addEventListenerToDellCategoryButton();
     categoryList.classList.remove("form-invisible");
     writeToLocalStorage("lastSelectedCategoryInList", categoryList.value);
     hideItemsAndAddItemTextFieldAndButton();
@@ -76,6 +86,39 @@ function showCategoryNameAndItems() {
     categoryList.classList.add("form-invisible");
     categoryNameOutput.innerHTML =
       "Please add a category to start using the application";
+  }
+}
+
+//функція для видалення категорії
+function delCategory(event) {
+  let isSure = confirm("Are you sure you want to delete this category with all to-do items?");
+  if (isSure) {
+    let categoryToDel =
+      event.target.parentElement.previousElementSibling.children[0].innerHTML;
+    let index = toDoCategories.findIndex((el) => el.categoryName === categoryToDel);
+
+    toDoCategories.splice(index, 1);
+    writeToLocalStorage("toDoCategories", toDoCategories);
+    //видаляєм усі items в яких указана ця категорія
+    let indexOfitemWithDeletedCategory = toDoItems.findIndex(item => item.itemCategory === categoryToDel);
+    while (indexOfitemWithDeletedCategory !== -1) {
+      indexOfitemWithDeletedCategory 
+      toDoItems.splice(indexOfitemWithDeletedCategory, 1);
+      indexOfitemWithDeletedCategory = toDoItems.findIndex(item => item.itemCategory === categoryToDel);
+    }
+
+    writeToLocalStorage("toDoItems", toDoItems);
+
+    let categoryList = document.querySelector("#categoryList");
+    //установлюємо останню категорію у першу у списку
+    writeToLocalStorage("lastSelectedCategoryInList", toDoCategories[0].categoryName); //записуємо додану категорію як останню у локал сторєдж    //перезавантажуємо сторінку
+    categoryList.value = toDoCategories[0].categoryName;
+    //categoryList.change();
+
+    hideCategoriesInDropdownList();
+    showCategoriesInDropdownList();
+    showCategoryNameAndItems();
+
   }
 }
 
@@ -231,6 +274,8 @@ function showItems() {
 //якщо змінюється категорія у випадаючому списку
 let categoryList = document.querySelector("#categoryList");
 categoryList.addEventListener("change", showCategoryNameAndItems); //створюємо нову категорію по кліку на кнопку
+//при початковому завантаденні сторінки додаємо ивент лісенер до кнопки
+addEventListenerToDellCategoryButton();
 
 //якщо додається категорія при кліку на кнопку
 function addEventListenersToaddListCategoryButton() {
@@ -261,6 +306,12 @@ function addEventListenersToaddListCategoryButton() {
       addListCategoryField.focus();
     }
   });
+}
+
+//якщо видаляють категорію
+function addEventListenerToDellCategoryButton() {
+  let delCategoryButton = document.querySelector("#delCategoryButton");
+  delCategoryButton.addEventListener("click", delCategory);
 }
 
 //якщо клікають по кнопці "додати item" або тиснуть на Ентер при фокусі на текстовому полі

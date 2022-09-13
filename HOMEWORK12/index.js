@@ -1,6 +1,6 @@
 // ---------------------task 1---------------------
 
-const { Http2ServerRequest } = require("http2");
+const xhttp = new XMLHttpRequest();
 
 const voteBtn = document.querySelector("#voteBtn");
 voteBtn.addEventListener("click", loadDoc);
@@ -17,14 +17,14 @@ function loadDoc () {
     };
 
     xhttp.onerror = function() {
-        alert("Error");
+        alert("Run task1_server.js");
     };
 }
 
 // ---------------------task 2---------------------
 let downloadBooksBtn = document.querySelector('#downloadBooksBtn');
 
-downloadBooks.addEventListener("click", downloadBooks);
+downloadBooksBtn.addEventListener("click", downloadBooks);
 
 function downloadBooks() {
     const xhttp = new XMLHttpRequest();
@@ -32,10 +32,18 @@ function downloadBooks() {
     xhttp.send();
 
     xhttp.onload = function () {
-        downloadBooksBtn.innerHTML = JSON.parse(xhttp.responseText);
+         let booksArray = JSON.parse(xhttp.responseText);
+         let authors = "";
+         for (const iterator of booksArray) {
+            authors += `<li>${iterator}</li>
+            `;
+         }
+         downloadBooksBtn.innerHTML = `<ul>
+         ${authors}
+         </ul>`;
     };
 
     xhttp.onerror = function () {
-        alert('Error');
+        alert('Run task2_server.js');
     };
 }

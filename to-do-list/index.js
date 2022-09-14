@@ -113,8 +113,7 @@ function delCategory(event) {
     //установлюємо останню категорію у першу у списку
     writeToLocalStorage("lastSelectedCategoryInList", toDoCategories[0].categoryName); //записуємо додану категорію як останню у локал сторєдж    //перезавантажуємо сторінку
     categoryList.value = toDoCategories[0].categoryName;
-    //categoryList.change();
-
+   
     hideCategoriesInDropdownList();
     showCategoriesInDropdownList();
     showCategoryNameAndItems();
@@ -274,8 +273,6 @@ function showItems() {
 //якщо змінюється категорія у випадаючому списку
 let categoryList = document.querySelector("#categoryList");
 categoryList.addEventListener("change", showCategoryNameAndItems); //створюємо нову категорію по кліку на кнопку
-//при початковому завантаденні сторінки додаємо ивент лісенер до кнопки
-addEventListenerToDellCategoryButton();
 
 //якщо додається категорія при кліку на кнопку
 function addEventListenersToaddListCategoryButton() {

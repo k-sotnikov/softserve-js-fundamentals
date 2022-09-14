@@ -273,6 +273,8 @@ function showItems() {
 //якщо змінюється категорія у випадаючому списку
 let categoryList = document.querySelector("#categoryList");
 categoryList.addEventListener("change", showCategoryNameAndItems); //створюємо нову категорію по кліку на кнопку
+//при початковому завантаденні сторінки додаємо ивент лісенер до кнопки
+//addEventListenerToDellCategoryButton();
 
 //якщо додається категорія при кліку на кнопку
 function addEventListenersToaddListCategoryButton() {
@@ -387,4 +389,4 @@ function addEventListenersToItemsElements() {
 }
 
 //при початковому завантаденні сторінки додаємо ивент лісенери до items
-addEventListenersToItemsElements();
+// addEventListenersToItemsElements();
